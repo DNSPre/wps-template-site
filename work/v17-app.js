@@ -81,7 +81,7 @@ render();
 
 // One resource-type navigation; topics and access are independent filters.
 function selectResourceType18(value){
-  const access='all';
+  const access=accessFilter17;
   chooseCatalog(value==='all'||value==='templates'?value:'assets');
   kind=value==='all'||value==='templates'?value:'assets';
   assetKind17=value==='all'||value==='templates'?'all':value;
@@ -98,7 +98,6 @@ listing=function(saved=false){
     // Existing menu links with a topic/format retain their asset scope.
     if(assetGroup!=='all'||fmt==='SVG')assetKind17='icon';else kind='all';
   }
-  if(!saved)accessFilter17='all';
   let html=listingBefore18(saved);if(saved)return html;
   html=html.replace(/<div class="tabs">[\s\S]*?<\/div>/g,block=>/chooseCatalog\('|assetGroup='/.test(block)?'':block);
   html=html.replace(/<div class="taxonomy-pills">[\s\S]*?<\/div>/g,'');
