@@ -3,7 +3,7 @@
   "version": "0.17.0",
   "private": true,
   "scripts": {
-    "build": "node work/assemble-v17.cjs && node -e \"require('fs').copyFileSync('outputs/WPS-Template交互原型.html','index.html')\"",
-    "test": "node work/check-v17.cjs && node work/check-v18.cjs && node work/check-v19.cjs"
+    "build": "node work/assemble-v17.cjs && node work/build-routes-v20.cjs",
+    "test": "node work/check-v17.cjs && node work/check-v18.cjs && node work/check-v19.cjs && node work/check-v20.cjs"
   }
 }
