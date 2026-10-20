@@ -6,7 +6,7 @@ for(const id of ['zh-Hant-HK','en-US','th-TH','id-ID','ja-JP','de-DE']){
  app.eval('selectLocale('+JSON.stringify(id)+');selectResourceType18("templates");view="browse";render()');const h=app.nodes.main.innerHTML;
  if(h.includes('topic-nav')||h.includes('module-title')||h.includes('taxonomy-pills'))throw Error('legacy empty category block');
  const selects=[...h.matchAll(/<select[^>]*>[\s\S]*?<\/select>/g)].map(m=>m[0]);if(selects.filter(s=>s.includes('aria-label="'+app.eval('t(2)')+'"')).length!==1)throw Error('duplicate scenario');
- const pricing=selects.find(s=>s.includes('access-filter22'));if(!pricing||!pricing.includes('>Free / Pro+</option>')||!pricing.includes('>Pro+</option>')||/>\s*<\/option>/.test(pricing))throw Error('empty translated option');
+ const pricing=selects.find(s=>s.includes('access-filter22'));if(!pricing||!pricing.includes('>All</option>')||!pricing.includes('>Pro+</option>')||/>\s*<\/option>/.test(pricing))throw Error('empty translated option');
 }
 app.eval('selectAccess22("pro");catalogCategory24("office")');if(app.eval('accessFilter17')!=='pro'||!app.eval('filtered().every(d=>d.access==="pro"&&d.taxCategory==="office")'))throw Error('combined category filter');
 app.eval('q="budget";resetCatalog24()');if(app.eval('q')!=='budget'||app.eval('kind')!=='templates')throw Error('reset discarded search/type');
