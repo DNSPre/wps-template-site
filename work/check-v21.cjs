@@ -5,6 +5,7 @@ const fs=require('fs'),vm=require('vm'),assert=require('assert');const html=fs.r
  await app.eval(`(async()=>{
  head();let h=document.getElementById('header').innerHTML;
  if(h.includes('header-pro17')||h.includes('class="account-menu"')||h.includes("go('saved')"))throw Error('guest header leak');
+ if(!h.includes('>'+ac15(0)+'</button>')||h.includes(ac15(0)+' / '+ac15(1)))throw Error('guest login label');
  if((h.match(/class="account-signin"/g)||[]).length!==1)throw Error('duplicate login');
  if(card(records[0]).includes('toggleSave('))throw Error('guest favorite');
  selected=5102;if(detail().includes('toggleSave('))throw Error('guest detail favorite');
@@ -12,6 +13,7 @@ const fs=require('fs'),vm=require('vm'),assert=require('assert');const html=fs.r
  await requestResource17(5102);if(transfers21.length||!authDialogOpen21)throw Error('guest payment bypass');
  await enterDemoAccount15();if(!signedIn21()||!document.getElementById('modalbody').innerHTML.includes(ax17(8)))throw Error('login resume paywall');
  head();if(!document.getElementById('header').innerHTML.includes('header-pro17')||!card(records[0]).includes('toggleSave('))throw Error('free account header');
+ if(!document.getElementById('header').innerHTML.includes('account-trigger-label21')||!document.getElementById('header').innerHTML.includes('signOutWps15()'))throw Error('account center/logout missing');
  toggleSave(5101);if(!saveSet.has(5101))throw Error('signed in save');
  previewUpgrade17();await requestResource17(5102,'download','PNG');if(transfers21.length!==1||transfers21[0].format!=='PNG')throw Error('pro download');
  head();if(document.getElementById('header').innerHTML.includes('header-pro17')||planPage17().includes('startCheckout17()'))throw Error('member upsell');
