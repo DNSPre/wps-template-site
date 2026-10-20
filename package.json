@@ -4,6 +4,6 @@
   "private": true,
   "scripts": {
     "build": "node work/assemble-v17.cjs && node work/build-routes-v20.cjs",
-    "test": "node work/check-v17.cjs && node work/check-v18.cjs && node work/check-v19.cjs && node work/check-v20.cjs && node work/check-v21.cjs && node work/check-v22.cjs"
+    "test": "node work/check-v17.cjs && node work/check-v18.cjs && node work/check-v19.cjs && node work/check-v20.cjs && node work/check-v21.cjs && node work/check-v22.cjs && node work/check-v23.cjs"
   }
 }

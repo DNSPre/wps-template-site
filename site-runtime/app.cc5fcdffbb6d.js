@@ -731,3 +731,28 @@ const membershipMessageBefore22=membershipMessage21;membershipMessage21=function
 const vectorBefore22=vector17;vector17=function(d){let svg=vectorBefore22(d);if(d.mockPaid22&&d.assetKind==='wordart'){const words=['FOCUS','INSPIRE','GROW','HELLO','DREAM','SHINE','BUILD','IDEAS','START','BOLD','MOVE','CREATE'];svg=svg.replace('>CREATE<','>'+words[(d.variant-13)%words.length]+'<')}return svg};
 for(const d of records)if(d.mockPaid22&&d.assetKind==='wordart')d.filelang='English';
 render();
+
+;
+const identityCopy23={
+en:['Not a WPS Pro+ member yet','WPS Pro+ member','Renew Pro+','Create more with WPS Pro+','Explore Pro+ templates and visual assets.'],
+'zh-Hant':['尚未開通 WPS Pro+','WPS Pro+ 會員','續費 Pro+','讓好想法，擁有更多可能','探索 Pro+ 範本與視覺素材。'],
+th:['ยังไม่ได้เป็นสมาชิก WPS Pro+','สมาชิก WPS Pro+','ต่ออายุ Pro+','สร้างสรรค์ได้มากขึ้นด้วย WPS Pro+','สำรวจเทมเพลตและสื่อภาพ Pro+'],
+id:['Belum menjadi anggota WPS Pro+','Anggota WPS Pro+','Perpanjang Pro+','Berkreasi lebih jauh dengan WPS Pro+','Jelajahi templat dan aset visual Pro+.'],
+ja:['WPS Pro+ 未加入','WPS Pro+ メンバー','Pro+ を更新','WPS Pro+ で創作の幅を広げる','Pro+ テンプレートとビジュアル素材を探す。'],
+es:['Aún no eres miembro de WPS Pro+','Miembro de WPS Pro+','Renovar Pro+','Crea más con WPS Pro+','Explora plantillas y recursos visuales Pro+.'],
+'pt-BR':['Você ainda não é membro WPS Pro+','Membro WPS Pro+','Renovar Pro+','Crie mais com o WPS Pro+','Explore modelos e recursos visuais Pro+.'],
+fr:['Pas encore membre WPS Pro+','Membre WPS Pro+','Renouveler Pro+','Créez davantage avec WPS Pro+','Explorez les modèles et ressources visuelles Pro+.'],
+de:['Noch kein WPS Pro+ Mitglied','WPS Pro+ Mitglied','Pro+ verlängern','Mehr gestalten mit WPS Pro+','Pro+ Vorlagen und visuelle Inhalte entdecken.'],
+it:['Non sei ancora membro WPS Pro+','Membro WPS Pro+','Rinnova Pro+','Crea di più con WPS Pro+','Esplora modelli e risorse visive Pro+.'],
+pl:['Nie jesteś jeszcze członkiem WPS Pro+','Członek WPS Pro+','Odnów Pro+','Twórz więcej z WPS Pro+','Odkryj szablony i zasoby wizualne Pro+.'],
+ru:['Вы ещё не участник WPS Pro+','Участник WPS Pro+','Продлить Pro+','Создавайте больше с WPS Pro+','Откройте шаблоны и визуальные ресурсы Pro+.'],
+tr:['Henüz WPS Pro+ üyesi değilsiniz','WPS Pro+ üyesi','Pro+ yenile','WPS Pro+ ile daha fazlasını oluşturun','Pro+ şablonları ve görsel kaynakları keşfedin.'],
+vi:['Chưa là thành viên WPS Pro+','Thành viên WPS Pro+','Gia hạn Pro+','Sáng tạo nhiều hơn với WPS Pro+','Khám phá mẫu và tài nguyên hình ảnh Pro+.'],
+hi:['अभी WPS Pro+ सदस्य नहीं हैं','WPS Pro+ सदस्य','Pro+ नवीनीकृत करें','WPS Pro+ के साथ और बनाएँ','Pro+ टेम्पलेट और विज़ुअल संसाधन खोजें।'],
+fil:['Hindi ka pa miyembro ng WPS Pro+','Miyembro ng WPS Pro+','I-renew ang Pro+','Lumikha pa gamit ang WPS Pro+','Tuklasin ang mga template at visual asset ng Pro+.'],
+ms:['Belum menjadi ahli WPS Pro+','Ahli WPS Pro+','Perbaharui Pro+','Cipta lebih banyak dengan WPS Pro+','Terokai templat dan aset visual Pro+.']};
+const identityText23=i=>(identityCopy23[lang]||identityCopy23.en)[i];
+accountControls15=function(){if(!signedIn21())return `<button class="account-signin" onclick="accountDialog15()">${ac15(0)}</button>`;const state=membership21(),pro=state==='pro',free=state==='free';const label=pro?identityText23(1):free?identityText23(0):state==='error'?ac15(18):ac15(15);const expiry=pro&&verifiedEntitlements17?.expiresAt&&Number.isFinite(Date.parse(verifiedEntitlements17.expiresAt))?new Intl.DateTimeFormat(lang,{dateStyle:'medium'}).format(new Date(verifiedEntitlements17.expiresAt)):'';return `<details class="account-menu"><summary class="account-trigger" aria-label="${ac15(4)}">${icon('person')}<span class="account-trigger-label21">${ac15(4)}</span>${icon('chevron')}</summary><div class="account-menu-panel identity-panel23"><div class="identity-head23"><span class="identity-avatar23" aria-hidden="true">${icon('person')}</span><div><strong>${esc(wpsSession15?.displayName||ac15(4))}</strong><div class="identity-status23 ${pro?'is-pro':''}">${esc(label)}<button class="identity-refresh23" onclick="checkMembership21()" aria-label="${ac15(5)}">↻</button></div>${expiry?`<small>${esc(expiry)}</small>`:''}</div></div>${!wpsSession15?`<p class="identity-demo23">${an15('demo')}</p>`:''}${free||pro?`<section class="identity-offer23 ${pro?'renewal23':''}"><span class="identity-tier23">${pro?'Pro+':'WPS Pro+'}</span><h3>${pro?identityText23(1):identityText23(3)}</h3><p>${identityText23(4)}</p><button class="primary" onclick="${pro?'renewMembership23()':'startUpgrade21()'}">${pro?identityText23(2):ax17(7)} <span aria-hidden="true">↗</span></button></section>`:state==='error'?`<button class="outline" onclick="checkMembership21()">${ac15(19)}</button>`:''}<div class="identity-links23"><button onclick="libraryTab15='favorites';go('library')">${icon('heart')}<span>${ac15(2)}</span><small>${saveSet.size}</small></button><button onclick="libraryTab15='downloads';go('library')">${icon('download')}<span>${ac15(3)}</span><small>${history15.length}</small></button><button class="identity-signout23" onclick="signOutWps15()">${icon('person')}<span>${ac15(9)}</span></button></div>${wpsSession15?`<p class="identity-id23">ID: ${esc(wpsSession15.accountId)}</p>`:''}</div></details>`};
+const headBefore23=head;head=function(){headBefore23();$('header').innerHTML=$('header').innerHTML.replace(/<button class="header-pro17"[\s\S]*?<\/button>/g,'')};
+async function renewMembership23(){if(!signedIn21()){accountLogin21();return}const state=await checkMembership21();if(state==='pro')window.location.assign(WPS_BUY22);else if(state==='free')await startUpgrade21();else if(state!=='guest')membershipMessage21()}
+render();

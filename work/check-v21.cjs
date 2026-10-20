@@ -14,7 +14,7 @@ const fs=require('fs'),vm=require('vm'),assert=require('assert');const html=fs.r
  clearSession21();
  await requestResource17(5102);if(transfers21.length||!authDialogOpen21)throw Error('guest payment bypass');
  await enterDemoAccount15();if(!signedIn21()||!document.getElementById('modalbody').innerHTML.includes(ax17(8)))throw Error('login resume paywall');
- head();if(!document.getElementById('header').innerHTML.includes('header-pro17')||!card(records[0]).includes('toggleSave('))throw Error('free account header');
+ head();if(document.getElementById('header').innerHTML.includes('header-pro17')||!document.getElementById('header').innerHTML.includes('identity-offer23')||!card(records[0]).includes('toggleSave('))throw Error('free account header');
  if(!document.getElementById('header').innerHTML.includes('account-trigger-label21')||!document.getElementById('header').innerHTML.includes('signOutWps15()'))throw Error('account center/logout missing');
  toggleSave(5101);if(!saveSet.has(5101))throw Error('signed in save');addHistory15(records.find(d=>d.id===5101),'asset-download','initiated');if(history15.length!==1||!accountControls15().includes("libraryTab15='downloads'"))throw Error('download history missing');
  previewUpgrade17();await requestResource17(5102,'download','PNG');if(transfers21.length!==1||transfers21[0].format!=='PNG')throw Error('pro download');
