@@ -12,14 +12,16 @@ for(const locale of ['zh-Hant-HK','en-US','th-TH','id-ID','ja-JP']){
   assert(!h.includes('class="tabs"'));
   assert(!h.includes('class="taxonomy-pills"'));
   assert(!h.includes('undefined'));
-  assert.equal((h.match(/aria-pressed="true"/g)||[]).length,2);
+  assert.equal((h.match(/aria-pressed="true"/g)||[]).length,1);
   const types=app.eval('filtered().map(d=>d.type)');
   if(type==='templates')assert(types.every(t=>t==='templates'));
   if(!['templates','all'].includes(type))assert(app.eval('filtered().every(d=>d.assetKind==='+JSON.stringify(type)+')'));
-  app.eval("accessFilter17='pro';render()");assert(app.eval("filtered().every(d=>d.access==='pro')"));
+  app.eval("accessFilter17='pro';render()");assert.equal(app.eval('accessFilter17'),'all');assert(!app.eval('listing()').includes('rights-filter18')); 
   app.eval("accessFilter17='all'");
  }
 }
 app.eval("chooseAssetKind17('font')");assert.equal(app.eval('filtered().length'),4);
 app.eval("chooseCatalog('assets','SVG','all','office');listing()");assert(app.eval("filtered().every(d=>d.assetKind==='icon'&&d.assetGroup==='office')"));
 console.log('PASS: single type navigation, seven types, independent access filter, header entry and topic compatibility across five locales.');
+
+app.eval("selectResourceType18('chart')");assert(app.eval("filtered().some(d=>d.access==='free')&&filtered().some(d=>d.access==='pro')"));assert(!app.eval('menuLinks()').includes("accessFilter17='free'"));assert(!app.eval('menuLinks()').includes("go('plans')"));assert(app.eval("card(records.find(d=>d.id===5102))").includes('pro-badge17'));console.log('PASS: resource menus contain types only; free/Pro labels remain on resources and price controls are absent.');
