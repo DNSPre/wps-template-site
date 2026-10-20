@@ -8,7 +8,7 @@ if(records.filter(d=>d.code||d.fontKey).some(d=>d.access!=='free'))throw Error('
 selectResourceType18('templates');selectAccess22('pro');if(filtered().length!==records.filter(d=>d.type==='templates'&&d.access==='pro'&&eligible(d)).length||filtered().some(d=>d.access!=='pro'))throw Error('paid templates');
 selectResourceType18('chart');if(accessFilter17!=='pro'||filtered().length!==18)throw Error('combined type filter');
 selectAccess22('free');if(filtered().length!==6)throw Error('free chart');
-if((listing().match(/class="access-filter22"/g)||[]).length!==1)throw Error('duplicated price filter');
+if((listing().match(/class="catalog-select24 access-filter22"/g)||[]).length!==1)throw Error('duplicated price filter');
 if(!card(records.find(d=>d.id===200)).includes('Pro+'))throw Error('card badge');
 for(const id of [200,210,220,6101,6201,6301]){selected=id;const h=detail();if(h.includes('undefined')||!h.includes('Pro+'))throw Error('mock detail');}
  var redirects22=[];window.location={assign:url=>redirects22.push(url)};
