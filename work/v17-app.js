@@ -114,3 +114,20 @@ listing=function(saved=false){
 render();
 
 chooseAssetKind17=function(value){selectResourceType18(value==='all'?'all':value)};
+
+// Home discovery uses a single intent switch; detailed formats belong in browse.
+function chooseHomeScene19(scene){homeTask=scene;homeFormat='all';render()}
+const homeBefore19=home;
+home=function(){
+  homeFormat='all';
+  const html=homeBefore19();
+  const scenes=['all',14,15,16,17];
+  const controls=`<div class="home-scenes19" role="group" aria-label="${t(2)}">${scenes.map(scene=>`<button class="pill ${String(homeTask)===String(scene)?'active':''}" aria-pressed="${String(homeTask)===String(scene)}" onclick="chooseHomeScene19('${scene}')">${scene==='all'?t(11):t(scene)}</button>`).join('')}<button class="textlink home-browse19" onclick="browseHomeScene19()">${t(13)} →</button></div>`;
+  return html.replace(/<div class="recommend-controls">[\s\S]*?<\/select><\/div>/,controls);
+};
+function browseHomeScene19(){
+  const scene=homeTask;
+  assetKind17='all';accessFilter17='all';
+  chooseCatalog('templates','all',scene);
+}
+render();
