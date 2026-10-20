@@ -78,3 +78,39 @@ render();
 assetShelf=function(){return `<section class="section"><div class="sectionhead"><div><h2>${t(2)} · ${t(1)}</h2><p>${records.filter(d=>d.type==='assets').length} · ${ax17(0)}</p></div><button class="textlink" onclick="chooseAssetKind17('all')">${t(13)} →</button></div><div class="asset-category-grid">${groupKeys11.slice().sort((a,b)=>(profiles[market].asset[b]||0)-(profiles[market].asset[a]||0)).map(g=>{const arr=records.filter(d=>d.type==='assets'&&d.assetGroup===g);return `<button class="asset-category" onclick="chooseCatalog('assets','all','all','${g}')"><div class="asset-mosaic">${arr.slice(0,4).map(art).join('')}</div><strong>${assetGroupName(g)}</strong><span>${arr.length} →</span></button>`}).join('')}</div></section>`};
 const homeCounts17=home;home=function(){return homeCounts17().replace(`SVG<small>${CONFIG.openmoji.length}</small>`,`SVG<small>${records.filter(d=>d.type==='assets'&&d.format==='SVG').length}</small>`)};
 render();
+
+// One resource-type navigation; topics and access are independent filters.
+function selectResourceType18(value){
+  const access=accessFilter17;
+  chooseCatalog(value==='all'||value==='templates'?value:'assets');
+  kind=value==='all'||value==='templates'?value:'assets';
+  assetKind17=value==='all'||value==='templates'?'all':value;
+  accessFilter17=access;fmt='all';assetGroup='all';browsePage=1;render();
+}
+materialFilters17=function(){
+  const selected=kind==='templates'?'templates':kind==='assets'?assetKind17:'all';
+  const types=[['all',t(11)],['templates',t(0)],...kindOrder17.slice(1).map(k=>[k,ax17(kindIndex17[k])])];
+  return `<div class="resource-types18" aria-label="${ax17(0)}">${types.map(([k,label])=>`<button class="pill ${selected===k?'active':''}" aria-pressed="${selected===k}" onclick="selectResourceType18('${k}')">${label}<small>${records.filter(d=>k==='all'||(k==='templates'?d.type==='templates':d.assetKind===k)).length}</small></button>`).join('')}</div>`;
+};
+const listingBefore18=listing;
+listing=function(saved=false){
+  if(!saved&&kind==='assets'&&assetKind17==='all'){
+    // Existing menu links with a topic/format retain their asset scope.
+    if(assetGroup!=='all'||fmt==='SVG')assetKind17='icon';else kind='all';
+  }
+  let html=listingBefore18(saved);if(saved)return html;
+  html=html.replace(/<div class="tabs">[\s\S]*?<\/div>/g,block=>/chooseCatalog\('|assetGroup='/.test(block)?'':block);
+  html=html.replace(/<div class="taxonomy-pills">[\s\S]*?<\/div>/g,'');
+  const topic=kind==='assets'&&assetKind17==='icon'
+    ?`<select aria-label="${t(2)}" onchange="assetGroup=this.value;browsePage=1;render()"><option value="all">${t(2)}</option>${groupKeys11.map(g=>`<option value="${g}" ${assetGroup===g?'selected':''}>${assetGroupName(g)}</option>`).join('')}</select>`
+    :kind!=='assets'?`<select aria-label="${t(2)}" onchange="if(this.value){openCategory(this.value)}else{taxonomyCategory=null;taxonomyLeaf=null;browsePage=1;render()}"><option value="">${t(2)}</option>${allowedCategories11().map(c=>`<option value="${c.id}" ${taxonomyCategory===c.id?'selected':''}>${taxLabel(c)}</option>`).join('')}</select>`:'';
+  html=html.replace('<div class="filterbar"><div>',`<div class="filterbar"><div>${topic}`);
+  const rights=`<div class="rights-switch17 rights-filter18">${[['all',t(11)],['free',ax17(6)],['pro','Pro']].map(([k,label])=>`<button class="${accessFilter17===k?'active':''}" aria-pressed="${accessFilter17===k}" onclick="accessFilter17='${k}';browsePage=1;render()">${label}</button>`).join('')}</div>`;
+  html=html.replace('<div class="filterbar">',rights+'<div class="filterbar">');
+  if(kind!=='assets'||assetKind17!=='icon')html=html.replace(/<div class="style-switch">[\s\S]*?<\/div>/,'');
+  if(!taxonomyCategory){const title=kind==='all'?t(11):kind==='templates'?t(0):ax17(kindIndex17[assetKind17]);html=html.replace(/(<div class="browsehead"><h1>)[\s\S]*?(<\/h1>)/,'$1'+title+'$2');}
+  return html;
+};
+render();
+
+chooseAssetKind17=function(value){selectResourceType18(value==='all'?'all':value)};
