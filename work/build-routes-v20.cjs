@@ -11,7 +11,7 @@ fs.writeFileSync('site-runtime/'+jsName,js);fs.writeFileSync('site-runtime/'+css
 const ctx={window:{},URL,location:{href:'file:///prototype.html'},history:{}};vm.runInNewContext(fs.readFileSync('work/locale-bootstrap-v20.js','utf8'),ctx);
 const {slugs,aliases,paths}=ctx.window.WPS_ROUTE20;
 function shell(depth,id){const prefix='../'.repeat(depth)+'site-runtime/';return html.replace(/<script>[\s\S]*?<\/script>/g,'').replace(/<style>[\s\S]*?<\/style>/g,'').replace('</head>',`<link rel="stylesheet" href="${prefix+cssName}"></head>`).replace('</body>',`<script src="${prefix+jsName}"></script></body>`).replace(/<html[^>]*>/,`<html lang="${id||'en-US'}">`)}
-fs.writeFileSync('index.html',shell(0));fs.writeFileSync('.nojekyll','');
+fs.writeFileSync('release.json',JSON.stringify({js:jsName,css:cssName})+'\n');fs.writeFileSync('index.html',shell(0));fs.writeFileSync('.nojekyll','');
 const generated=[];
 for(const [id,slug] of Object.entries(slugs))for(const suffix of new Set(Object.values(paths))){const dir=path.join(slug,suffix);fs.mkdirSync(dir,{recursive:true});fs.writeFileSync(path.join(dir,'index.html'),shell(suffix?2:1,id));generated.push('/'+dir.replace(/\\/g,'/')+'/')}
 for(const [alias,id] of Object.entries(aliases))if(alias!==slugs[id]){const dir=alias;fs.mkdirSync(dir,{recursive:true});fs.writeFileSync(path.join(dir,'index.html'),shell(1,id))}
