@@ -2,7 +2,7 @@ const fs=require('fs'),vm=require('vm'),assert=require('assert');const html=fs.r
 
 
 const app=run('','','en-US','/zh-hk/resources/');let main=app.nodes.main.innerHTML;if(!main.includes('catalog24')||main.includes('topic-nav')||main.includes('module-title'))throw Error('deployed bundle uses retired catalog');
-app.eval('selectResourceType18("templates");selectAccess22("pro")');main=app.nodes.main.innerHTML;if(!main.includes('>All</option>')||!main.includes('>Pro+</option>'))throw Error('blank options');
+app.eval('selectResourceType18("templates");selectAccess22("pro")');main=app.nodes.main.innerHTML;if(!main.includes('>全部</option>')||!main.includes('>免費</option>')||!main.includes('>會員</option>'))throw Error('blank options');
 const scenarioLabel=app.eval('t(2)');if((main.match(new RegExp('aria-label="'+scenarioLabel+'"','g'))||[]).length!==1)throw Error('duplicate scenario');
 const release=JSON.parse(fs.readFileSync('release.json'));if(!fs.existsSync('site-runtime/'+release.js)||!fs.existsSync('site-runtime/'+release.css))throw Error('invalid release manifest');
 console.log('PASS: actual deployment bundle renders compact catalog, intact price labels and one scenario control; release manifest references current assets.');
