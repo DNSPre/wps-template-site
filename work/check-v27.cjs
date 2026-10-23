@@ -1,0 +1,12 @@
+const fs=require('fs'),vm=require('vm'),assert=require('assert');const html=fs.readFileSync('outputs/WPS-Template交互原型.html','utf8');function run(search='',hash='',saved=null,path='/'){let nodes={},data={'wps-template-locale-v1':saved},lastUrl='';function node(){return{innerHTML:'',textContent:'',hidden:true,open:false,setAttribute(){},addEventListener(){},showModal(){this.open=true},close(){this.open=false},focus(){},insertAdjacentHTML(pos,s){this.innerHTML+=s}}}let ctx={URL,URLSearchParams,console,location:{search,href:'https://wps.design.cab'+path+search+hash,hash,pathname:path},history:{replaceState(a,b,u){lastUrl=String(u)}},document:{documentElement:{lang:''},activeElement:{focus(){}},getElementById(id){return nodes[id]??=node()},querySelectorAll(){return[]}},window:{scrollTo(){}},localStorage:{getItem(k){return data[k]||null},setItem(k,v){data[k]=v}},setTimeout(){return 1},clearTimeout(){}};ctx.history.replaceState=(a,b,u)=>{const parsed=new URL(u,ctx.location.href);lastUrl=parsed.href;ctx.location.href=parsed.href;ctx.location.pathname=parsed.pathname;ctx.location.search=parsed.search;ctx.location.hash=parsed.hash};ctx.document.currentScript={src:'https://wps.design.cab/site-runtime/app.000000000000.js'};vm.createContext(ctx);vm.runInContext(fs.readFileSync('site-runtime/'+JSON.parse(fs.readFileSync('work/routes-v20.json')).runtime.js,'utf8'),ctx);return{ctx,eval:s=>vm.runInContext(s,ctx),url:()=>lastUrl,nodes}}
+
+
+const app=run('','','en-US','/en-us/library/');
+app.eval('demoAccount15=true;switchAccount21();view="library";saveSet.add(1);render()');
+let h=app.nodes.main.innerHTML;
+if(!h.includes('library27')||h.includes('library-head')||!h.includes('role="tablist"'))throw Error('legacy library layout');
+if(h.includes('onclick="refreshLibrary15()"'))throw Error('demo shows real sync action');
+app.eval('setLibraryTab27("downloads")');if(!app.nodes.main.innerHTML.includes('library-empty27'))throw Error('missing download empty state');
+app.eval('history15=[{resourceId:1,createdAt:"2026-10-23T00:00:00Z",kind:"asset-download"}];render()');if(!app.nodes.main.innerHTML.includes('library-history27'))throw Error('missing download history');
+app.eval('clearSession21();render()');if(app.nodes.main.innerHTML.includes('library-history27'))throw Error('logout leaked history');
+console.log('PASS: redesigned library, honest demo sync state, download tabs and logout protection.');
