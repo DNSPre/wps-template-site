@@ -7,11 +7,13 @@
  const base=url.pathname.startsWith('/wps-template-site/')?'/wps-template-site/':'/';
  const parts=url.pathname.slice(base.length).split('/').filter(Boolean),id=aliases[(parts[0]||'').toLowerCase()];
  const tail=parts.slice(1).join('/')+'/';
- const initialTarget=url.hash.slice(1)||(id?Object.keys(paths).find(k=>k!=='detail'&&paths[k]===tail):null)||'home';
- window.WPS_ROUTE20={slugs,aliases,paths,base,online,initialTarget,initialLocale:id||aliases[(url.searchParams.get('locale')||'').toLowerCase()]};
+ const topicIds=['office','career','education','reporting','project','travel','planning','print'];
+ const initialTopic=parts[1]==='collections'&&topicIds.includes(parts[2])?parts[2]:null;
+ const initialTarget=(initialTopic?'collections':null)||url.hash.slice(1)||(id?Object.keys(paths).find(k=>k!=='detail'&&paths[k]===tail):null)||'home';
+ window.WPS_ROUTE20={slugs,aliases,paths,base,online,initialTarget,initialTopic,initialLocale:id||aliases[(url.searchParams.get('locale')||'').toLowerCase()]};
  if(online){
   if(id)url.searchParams.set('locale',id);
-  if(!url.hash&&id){const tail=parts.slice(1).join('/')+'/';url.hash=Object.keys(paths).find(k=>k!=='detail'&&paths[k]===tail)||'home';}
+  if(!url.hash&&id){const tail=parts.slice(1).join('/')+'/';url.hash=initialTopic?'collections':Object.keys(paths).find(k=>k!=='detail'&&paths[k]===tail)||'home';}
   // Bootstrap legacy application state; the final render writes the canonical path.
   history.replaceState(null,'',url);
  }

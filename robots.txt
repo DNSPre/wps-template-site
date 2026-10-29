@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://wps.design.cab/sitemap.xml
